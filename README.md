@@ -22,6 +22,7 @@ Run the following command to start the application (on Linux):
     git clone git@github.com:mevdschee/mintyphp-todomvc.git
     cd mintyphp-todomvc
     cat create.sql | sudo mysql
+    cp config/config.php.template config/config.php
     bash start.sh
 
 Now point your browser to [http://localhost:8000/](http://localhost:8000/) to start the application in your browser.

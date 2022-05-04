@@ -10,7 +10,7 @@ class Router
 
 class Session
 {
-  public static $sessionName = 'mintyphp'; // default: 'mintyphp'
+  public static $sessionName = 'mintyphp-todomvc'; // default: 'mintyphp'
 }
 
 class Firewall
@@ -24,11 +24,11 @@ class Firewall
 
 class DB
 {
-  public static $host     = 'localhost'; // default: 'localhost'
-  public static $username = 'root';      // set to 'root' to initialize
-  public static $password = '';          // overwritten during initialization
-  public static $database = 'mintyphp';  // set to project name
-  public static $port     = 3306;        // default: 3306
+  public static $host     = 'localhost';        // default: 'localhost'
+  public static $username = 'mintyphp-todomvc'; // set to 'root' to initialize
+  public static $password = 'mintyphp-todomvc'; // overwritten during initialization
+  public static $database = 'mintyphp-todomvc'; // set to project name
+  public static $port     = 3306;               // default: 3306
 }
 
 class Auth

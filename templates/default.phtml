@@ -1,0 +1,55 @@
+<?php
+
+use MintyPHP\Buffer;
+use MintyPHP\Router;
+
+?>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <base href="<?php e(Router::getBaseUrl()); ?>">
+  <title><?php Buffer::get('title'); ?></title>
+  <link rel="stylesheet" href="css/base.css">
+  <?php Buffer::get('stylesheets'); ?>
+</head>
+
+<body class="learn-bar">
+  <aside class="learn">
+    <header>
+      <h3>MintyPHP</h3>
+      <span class="source-links">
+        <h5>MintyPHP Example</h5><a href="https://github.com/mevdschee/mintyphp-todomvc">Source</a>
+      </span>
+    </header>
+    <hr>
+    <blockquote class="quote speech-bubble">
+      <p>MintyPHP aims to be a full-stack framework that is:</p>
+      <ol>
+        <li>Easy to learn (and debug)</li>
+        <li>Secure by design</li>
+        <li>Light-weight</li>
+      </ol>
+      <p>By design, it does have one variable scope for all layers, it require you to write SQL queries (no ORM) and it uses PHP as a templating language.</p>
+      <p>Mainly to make it easy to learn for PHP developers.</p>
+      <footer>
+        <a href="https://mintyphp.github.io/">MintyPHP</a>
+      </footer>
+    </blockquote>
+    <footer>
+      <hr>
+      <em>If you have other helpful links to share, or find any of the links above no longer work, please <a href="https://github.com/mevdschee/mintyphp-todomvc/issues">let us know</a>.</em>
+    </footer>
+  </aside>
+  <section class="todoapp">
+    <?php Buffer::get('html'); ?>
+  </section>
+  <footer class="info">
+    <p>Double-click to edit a todo</p>
+    <p>Created by <a href="http://github.com/mevdschee">Maurits van der Schee</a></p>
+    <p>Inspired by <a href="http://todomvc.com">TodoMVC</a></p>
+  </footer>
+</body>
+
+</html>

@@ -1,0 +1,68 @@
+<?php
+
+use MintyPHP\Buffer;
+use MintyPHP\Session;
+
+?>
+<?php Buffer::set('title', 'MintyPHP • TodoMVC'); ?>
+<?php Buffer::start('stylesheets'); ?>
+<link rel="stylesheet" href="css/index.css">
+<?php Buffer::end('stylesheets'); ?>
+
+<header class="header">
+      <h1>todos</h1>
+      <form action="todo/add" method="post">
+            <input type="text" name="name" class="new-todo" placeholder="What needs to be done?" <?php if (!$editItemId) : ?>autofocus<?php endif; ?>>
+            <?php Session::getCsrfInput(); ?>
+      </form>
+</header>
+<section class="main" style="display: block;">
+      <?php if ($itemsLeft > 0 || $itemsCompleted > 0) : ?>
+            <form id="form_complete" action="todo/complete/<?php e($state); ?>" method="post">
+                  <input id="toggle-all" name="toggle-all" type="checkbox" class="toggle-all" <?php if ($itemsLeft == 0) : ?>checked<?php endif; ?> <?php if ($editItemId) : ?>disabled<?php else : ?>onchange="document.getElementById('form_complete').submit()" <?php endif; ?>>
+                  <label for="toggle-all">Mark all as complete</label>
+                  <?php Session::getCsrfInput(); ?>
+            </form>
+      <?php endif; ?>
+      <ul class="todo-list">
+            <?php foreach ($data as $row) : ?>
+                  <?php if ($state == "all" or ($state == "active" and $row['todo']['is_checked'] == false) or ($state == "completed" and $row['todo']['is_checked'] == true)) : ?>
+                        <li class="<?php if ($row['todo']['is_checked']) : ?>completed<?php endif; ?> <?php if ($editItemId == $row['todo']['id']) : ?>editing<?php endif; ?>">
+                              <form id="form_edit_{{ todo.id }}" action="todo/edit/<?php e($state); ?>/<?php e($row['todo']['id']); ?>" method="post" onsubmit="<?php if ($editItemId and $editItemId != $row['todo']['id']) : ?>return false;<?php endif; ?>">
+                                    <?php if ($editItemId == $row['todo']['id']) : ?>
+                                          <input type="text" name="name" value="<?php e($row['todo']['name']); ?>" class="edit" onblur="document.getElementById('form_edit_{{ todo.id }}').submit()" autofocus onfocus="tmp=this.value;this.value='';this.value=tmp" onkeyup="if (event.key=='Escape') document.location='todo/list/<?php e($state); ?>'">
+                                    <?php else : ?>
+                                          <input type="submit" name="check" value="<?php if ($row['todo']['is_checked']) : ?>0<?php else : ?>1<?php endif; ?>" class="toggle <?php if ($row['todo']['is_checked']) : ?>checked<?php endif; ?>">
+                                          <label ondblclick="document.location='todo/list/<?php e($state); ?>/<?php e($row['todo']['id']); ?>'"><?php e($row['todo']['name']); ?></label>
+                                          <input type="hidden" name="name" value="<?php e($row['todo']['name']); ?>">
+                                          <input type="submit" name="remove" value="×" class="destroy">
+                                    <?php endif; ?>
+                                    <?php Session::getCsrfInput(); ?>
+                              </form>
+                        </li>
+                  <?php endif; ?>
+            <?php endforeach; ?>
+      </ul>
+</section>
+<?php if ($itemsLeft > 0 or $itemsCompleted > 0) : ?>
+      <footer class="footer" style="display: block;">
+            <span class="todo-count"><strong><?php e($itemsLeft); ?></strong> item<?php if ($itemsLeft != 1) : ?>s<?php endif; ?> left</span>
+            <ul class="filters">
+                  <li>
+                        <a href="todo/list/all" class="<?php if ($state == "all") : ?>selected<?php endif; ?>" onclick="<?php if ($editItemId) : ?>return false;<?php endif; ?>">All</a>
+                  </li>
+                  <li>
+                        <a href="todo/list/active" class="<?php if ($state == "active") : ?>selected<?php endif; ?>" onclick="<?php if ($editItemId) : ?>return false;<?php endif; ?>">Active</a>
+                  </li>
+                  <li>
+                        <a href="todo/list/completed" class="<?php if ($state == "completed") : ?>selected<?php endif; ?>" onclick="<?php if ($editItemId) : ?>return false;<?php endif; ?>">Completed</a>
+                  </li>
+            </ul>
+            <?php if ($itemsCompleted > 0) : ?>
+                  <form action="todo/clear/<?php e($state); ?>" method="post">
+                        <input type="submit" name="clear" class="clear-completed" value="Clear completed" <?php if ($editItemId) : ?>disabled<?php endif; ?>>
+                        <?php Session::getCsrfInput(); ?>
+                  </form>
+            <?php endif; ?>
+      </footer>
+<?php endif; ?>

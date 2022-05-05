@@ -8,7 +8,7 @@ Although web games may benefit from continous updates to the UI, business softwa
 
 Javascript version: https://todomvc.com/examples/vanillajs/
 
-This is an implementation of the TodoMVC application in the MintyPHP framework to show even for this UI intensive (showcase) application you don't need a Javascript MV* framework. This Symfony application has the exact same functionality as the Javascript version linked above, but with minimal use of Javascript.
+This is an implementation of the TodoMVC application in the [MintyPHP framework](https://github.com/mintyphp/mintyphp) to show even for this UI intensive (showcase) application you don't need a Javascript MV* framework. This Symfony application has the exact same functionality as the Javascript version linked above, but with minimal use of Javascript.
 
 ### Requirements
 
